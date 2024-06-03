@@ -1,23 +1,22 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import styled from 'styled-components/native';
 import Header from '../components/Header';
 // import ExpenseListScreen from './ExpenseListScreen';
 // import AddButton from '../components/AddButton';
 
-const HomeScreen = () => {
+const HomeScreen = ({ toggleTheme, isDarkTheme }) => {
   return (
-    <View style={styles.screen}>
-      <Header title="Expense Tracker" />
+    <Container>
+      <Header title="Expense Tracker" toggleTheme={toggleTheme} isDarkTheme={isDarkTheme} />
       {/* <ExpenseListScreen />
       <AddButton /> */}
-    </View>
+    </Container>
   );
 };
 
-const styles = StyleSheet.create({
-  screen: {
-    flex: 1,
-  },
-});
+const Container = styled.View`
+  flex: 1;
+  background-color: ${(props) => props.theme.background};
+`;
 
 export default HomeScreen;
