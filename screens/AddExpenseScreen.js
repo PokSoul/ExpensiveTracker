@@ -2,11 +2,11 @@ import React from 'react';
 import styled from 'styled-components/native';
 import Header from '../components/Header';
 
-const HomeScreen = ({ toggleTheme, isDarkTheme }) => {
+const AddExpenseScreen = ({ toggleTheme, isDarkTheme }) => {
   return (
     <Container>
       <Header title="Expense Tracker" toggleTheme={toggleTheme} isDarkTheme={isDarkTheme} />
-      {/* Vous pouvez ajouter d'autres composants ici, comme ExpenseListScreen et AddButton */}
+      {/* Ajoutez le formulaire pour ajouter des dépenses ici */}
     </Container>
   );
 };
@@ -16,4 +16,4 @@ const Container = styled.View`
   background-color: ${(props) => props.theme.background};
 `;
 
-export default HomeScreen;
+export default AddExpenseScreen;
