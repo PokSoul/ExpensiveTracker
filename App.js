@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import AppNavigator from './navigation/AppNavigator';
 import CustomSplashScreen from './screens/CustomSplashScreen';
 import { lightTheme, darkTheme } from './styles/themes';
+import { ExpenseProvider } from './context/ExpenseContext';
 
 export default function App() {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
@@ -26,14 +27,16 @@ export default function App() {
   const theme = isDarkTheme ? darkTheme : lightTheme;
 
   return (
-    <ThemeProvider theme={theme}>
-      {isSplashVisible ? (
-        <CustomSplashScreen onFinish={handleSplashFinish} />
-      ) : (
-        <NavigationContainer>
-          <AppNavigator toggleTheme={toggleTheme} isDarkTheme={isDarkTheme} />
-        </NavigationContainer>
-      )}
-    </ThemeProvider>
+    <ExpenseProvider>
+      <ThemeProvider theme={theme}>
+        {isSplashVisible ? (
+          <CustomSplashScreen onFinish={handleSplashFinish} />
+        ) : (
+          <NavigationContainer>
+            <AppNavigator toggleTheme={toggleTheme} isDarkTheme={isDarkTheme} />
+          </NavigationContainer>
+        )}
+      </ThemeProvider>
+    </ExpenseProvider>
   );
 }

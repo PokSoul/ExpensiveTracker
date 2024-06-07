@@ -7,6 +7,7 @@ export const lightTheme = {
   placeholder: '#a9a9a9',
   secondary: '#ff1744', // Rouge vif
   addButtonBackground: '#ff6f00', 
+  cancelButtonBackground: 'red',
   buttonText: '#ffffff',
 };
 
@@ -19,5 +20,6 @@ export const darkTheme = {
   placeholder: '#a9a9a9',
   secondary: '#03dac6', // Cyan vif
   addButtonBackground: '#bb86fc', 
+  cancelButtonBackground: 'red',
   buttonText: '#000000',
 };

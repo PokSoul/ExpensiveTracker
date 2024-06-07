@@ -1,13 +1,29 @@
-import React, { useState } from 'react';
-import { TouchableOpacity, KeyboardAvoidingView, Platform } from 'react-native';
+import React, { useState, useContext } from 'react';
+import { KeyboardAvoidingView, Platform, TouchableOpacity } from 'react-native';
 import styled from 'styled-components/native';
 import Header from '../components/Header';
-import { Feather } from '@expo/vector-icons';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import { ExpenseContext } from '../context/ExpenseContext';
 
 const AddExpenseScreen = ({ navigation, toggleTheme, isDarkTheme }) => {
+  const { addExpense } = useContext(ExpenseContext);
   const [amount, setAmount] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(new Date());
   const [description, setDescription] = useState('');
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  const handleAddExpense = () => {
+    console.log('Test');
+    const newExpense = { amount, date: date.toISOString().split('T')[0], description };
+    addExpense(newExpense);
+    navigation.goBack();
+  };
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShowDatePicker(Platform.OS === 'ios');
+    setDate(currentDate);
+  };
 
   return (
     <KeyboardAvoidingView
@@ -26,12 +42,18 @@ const AddExpenseScreen = ({ navigation, toggleTheme, isDarkTheme }) => {
               onChangeText={setAmount}
               keyboardType="numeric"
             />
-            <Input
-              placeholder="Date"
-              placeholderTextColor={(props) => props.theme.placeholder}
-              value={date}
-              onChangeText={setDate}
-            />
+            <TouchableOpacity onPress={() => setShowDatePicker(true)}>
+              <Input
+                placeholder="Date"
+                placeholderTextColor={(props) => props.theme.placeholder}
+                value={date.toISOString().split('T')[0]}
+                editable={false}
+                pointerEvents="none"
+              />
+            </TouchableOpacity>
+            {showDatePicker && (
+              <DateTimePicker value={date} mode="date" display="default" onChange={onChange} />
+            )}
             <DescriptionInput
               placeholder="Description"
               placeholderTextColor={(props) => props.theme.placeholder}
@@ -46,7 +68,7 @@ const AddExpenseScreen = ({ navigation, toggleTheme, isDarkTheme }) => {
             </CancelButton>
             <AddButton
               onPress={() => {
-                /* Handle add expense */
+                handleAddExpense;
               }}
             >
               <AddText>Add</AddText>
@@ -115,13 +137,13 @@ const AddButton = styled.TouchableOpacity`
 
 const CancelText = styled.Text`
   text-align: center;
-  color: ${(props) => props.theme.cancelButtonText};
+  color: ${(props) => props.theme.buttonText};
   font-weight: bold;
 `;
 
 const AddText = styled.Text`
   text-align: center;
-  color: ${(props) => props.theme.addButtonText};
+  color: ${(props) => props.theme.buttonText};
   font-weight: bold;
 `;
 
